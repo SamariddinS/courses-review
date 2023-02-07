@@ -11,15 +11,14 @@ export const getMongoConfig = async (
 };
 
 const getMongoString = (configService: ConfigService) =>
-	'mongodb://' +
+	'mongodb+srv://' +
 	configService.get('MONGO_USER') +
 	':' +
 	configService.get('MONGO_PASSWORD') +
 	'@' +
 	configService.get('MONGO_HOST') +
-	':' +
-	configService.get('MONGO_PORT') +
 	'/' +
-	configService.get('MONGO_DATABASE');
+	configService.get('MONGO_DATABASE') +
+	'?retryWrites=true&w=majority';
 
 const getMongoOptions = () => ({});
