@@ -21,4 +21,7 @@ const getMongoString = (configService: ConfigService) =>
 	configService.get('MONGO_DATABASE') +
 	'?retryWrites=true&w=majority';
 
-const getMongoOptions = () => ({});
+const getMongoOptions = () => ({
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
