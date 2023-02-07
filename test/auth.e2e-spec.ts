@@ -1,13 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { Test, TestingModule } from '@nestjs/testing';
 import { disconnect } from 'mongoose';
 import { AuthDto } from 'src/auth/dto/auth.dto';
+import * as request from 'supertest';
+import { AppModule } from './../src/app.module';
 
 const loginDto: AuthDto = {
-	login: 'a@a.ru',
-	password: '1'
+	login: 'test3@mail.uz',
+	password: '1234567',
 };
 
 describe('AuthController (e2e)', () => {
@@ -41,8 +41,8 @@ describe('AuthController (e2e)', () => {
 			.send({ ...loginDto, password: '2' })
 			.expect(401, {
 				statusCode: 401,
-				message: "Неверный пароль",
-				error: "Unauthorized"
+				message: 'Неверный пароль',
+				error: 'Unauthorized',
 			});
 	});
 
@@ -52,8 +52,8 @@ describe('AuthController (e2e)', () => {
 			.send({ ...loginDto, login: 'aaa@a.ru' })
 			.expect(401, {
 				statusCode: 401,
-				message: "Пользователь с таким email не найден",
-				error: "Unauthorized"
+				message: 'Пользователь с таким email не найден',
+				error: 'Unauthorized',
 			});
 	});
 
