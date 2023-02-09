@@ -1,8 +1,13 @@
-FROM node:16-alpine3.16
+FROM node:18-alpine as build
 WORKDIR /opt/app
-ADD package.json package.json
-RUN npm install --legacy-peer-deps
+ADD package*.json ./
+RUN npm ci --legacy-peer-deps
 ADD . .
-RUN npm run build
-RUN npm prune --production --legacy-peer-deps
+RUN npm run build --prod
+
+FROM node:18-alpine
+WORKDIR /opt/app
+COPY --from=build /opt/app/dist ./dist
+ADD package*json ./
+RUN npm ci --omit=dev --legacy-peer-deps
 CMD ["node", "./dist/main.js"]
